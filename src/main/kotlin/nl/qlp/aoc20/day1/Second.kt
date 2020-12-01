@@ -9,8 +9,8 @@ fun main(args: Array<String>) {
 class Second {
     fun run() = File("input.txt").readLines().map { it.toInt() }.let { numbers ->
         numbers.flatMapIndexed { i_one, one ->
-            numbers.filterIndexed { fi_one, _ -> fi_one != i_one }.flatMapIndexed { i_two, two ->
-                numbers.filterIndexed { fi_two, _ -> fi_two != i_two && fi_two != i_two }.map { three -> Triple(one, two, three)}
+            numbers.subList(i_one + 1, numbers.size).flatMapIndexed { i_two, two ->
+                numbers.subList(i_one + 1 + i_two + 1, numbers.size).map { three -> Triple(one, two, three) }
             }
         }.first { it.sum() == 2020 }
         .multiplication()
@@ -21,4 +21,3 @@ class Second {
         fun multiplication() = one * two * three
     }
 }
-

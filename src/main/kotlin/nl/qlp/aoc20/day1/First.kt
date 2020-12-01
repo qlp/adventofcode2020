@@ -8,10 +8,10 @@ fun main(args: Array<String>) {
 
 class First {
     fun run() = File("input.txt").readLines().map { it.toInt() }.let { numbers ->
-        numbers.flatMap { one ->
-            numbers.filter { it != one }.map { other -> Pair(one, other) }
+        numbers.flatMapIndexed { i_one, one ->
+            numbers.subList(i_one + 1, numbers.size).map { two -> Pair(one, two) }
         }.first { it.sum() == 2020 }
-        .multiplication()
+            .multiplication()
     }
 
     data class Pair(val one: Int, val other: Int) {
@@ -19,4 +19,3 @@ class First {
         fun multiplication() = one * other
     }
 }
-
