@@ -45,7 +45,7 @@ class Test {
             }
         }
 
-        val marginInPercent = 10
+        val marginInPercent = 20
 
         assertThat(three * (1 + marginInPercent.toDouble() / 100)).isGreaterThan(generic.toDouble())
     }

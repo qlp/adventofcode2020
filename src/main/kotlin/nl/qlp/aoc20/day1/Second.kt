@@ -1,5 +1,6 @@
 package nl.qlp.aoc20.day1
 
+import nl.qlp.aoc20.readLinesFromInput
 import java.io.File
 
 fun main(args: Array<String>) {
@@ -7,7 +8,7 @@ fun main(args: Array<String>) {
 }
 
 class Second {
-    fun run(number: Int) = File("input.txt").readLines().map { it.toInt() }.let { numbers ->
+    fun run(number: Int) = readLinesFromInput().map { it.toInt() }.let { numbers ->
         numbers.flatMapIndexed { i_one, one ->
             numbers.subList(i_one + 1, numbers.size).flatMapIndexed { i_two, two ->
                 numbers.subList(i_one + 1 + i_two + 1, numbers.size).map { three -> Triple(one, two, three) }

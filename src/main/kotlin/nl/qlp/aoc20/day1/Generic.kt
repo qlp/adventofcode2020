@@ -1,5 +1,6 @@
 package nl.qlp.aoc20.day1
 
+import nl.qlp.aoc20.readLinesFromInput
 import java.io.File
 
 fun main(args: Array<String>) {
@@ -8,7 +9,7 @@ fun main(args: Array<String>) {
 }
 
 class Generic {
-    fun run(number: Int, size: Int) = File("input.txt").readLines().map { it.toInt() }.let { numbers ->
+    fun run(number: Int, size: Int) = readLinesFromInput().map { it.toInt() }.let { numbers ->
         numbers.permutations(size)
             .first { it.sum() == number }
             .reduce { total, next -> total * next }
