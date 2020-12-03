@@ -7,19 +7,5 @@ fun main(args: Array<String>) {
 }
 
 class First {
-    fun run(): Int {
-        var treeCount = 0
-        var y = 0
-
-        readLinesFromInput().forEach {
-            if (it[y] == '#') {
-                treeCount++
-            }
-
-            y += 3
-            y %= it.length
-        }
-
-        return treeCount
-    }
+    fun run() = TreeDetector(Slope(3, 1)).let { treeDetector -> readLinesFromInput().count { treeDetector.detect(it) } }
 }
