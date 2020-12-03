@@ -8,12 +8,12 @@ fun main(args: Array<String>) {
 
 class Second {
     fun run() = listOf(
-        Slope(1, 1),
-        Slope(3, 1),
-        Slope(5, 1),
-        Slope(7, 1),
-        Slope(1, 2)
-    ).map { TreeDetector(it).let { treeDetector -> readLinesFromInput().count { row -> treeDetector.detect(row) } } }
+            Slope(1, 1),
+            Slope(3, 1),
+            Slope(5, 1),
+            Slope(7, 1),
+            Slope(1, 2)
+    ).map { readLinesFromInput().filterIndexed { index, row -> it.hasTree(row, index) }.count() }
     .map { it.toLong() }
     .reduce { total, next -> total * next }
 }

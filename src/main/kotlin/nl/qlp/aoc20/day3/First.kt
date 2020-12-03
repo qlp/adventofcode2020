@@ -7,5 +7,5 @@ fun main(args: Array<String>) {
 }
 
 class First {
-    fun run() = TreeDetector(Slope(3, 1)).let { treeDetector -> readLinesFromInput().count { treeDetector.detect(it) } }
+    fun run() = readLinesFromInput().filterIndexed { index, row -> Slope(3, 1).hasTree(row, index) }.count()
 }
