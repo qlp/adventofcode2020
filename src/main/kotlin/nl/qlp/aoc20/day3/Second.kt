@@ -17,4 +17,3 @@ class Second {
     .map { it.toLong() }
     .reduce { total, next -> total * next }
 }
-
