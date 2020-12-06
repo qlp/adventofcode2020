@@ -9,14 +9,11 @@ fun main(args: Array<String>) {
 class Second {
     fun run() = readFromInput()
         .split("\n\n")
-        .map { group ->
-            val candidates = group.asSequence().filter { it.isLetter() }.toMutableSet()
-
-            group
+        .map { group -> group
                 .split("\n")
-                .forEach { person -> candidates.retainAll(person.asSequence().toSet()) }
-
-            candidates.size
+                .map { answers -> answers.asSequence().toSet() }
+                .reduce { acc, s -> acc intersect s }
+                .size
         }
         .sumBy { it }
 }
