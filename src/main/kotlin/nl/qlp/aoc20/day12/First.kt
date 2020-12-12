@@ -1,20 +1,17 @@
 package nl.qlp.aoc20.day12
 
-import nl.qlp.aoc20.readLinesFromInput
-import kotlin.math.abs
-
 fun main(args: Array<String>) {
     println(First().run())
 }
 
 class First {
-    fun run(): Int {
-        var ship = Ship(0, 0, Direction.EAST)
+    fun run() = FirstShip(0, 0, Orientation.EAST).applyMoves().distance()
+}
 
-        readLinesFromInput()
-                .mapNotNull { it.toMove() }
-                .forEach { ship = ship.apply(it) }
-
-       return abs(ship.east) + abs(ship.north)
-   }
+data class FirstShip(override val east: Int, override val north: Int, val orientation: Orientation): Ship {
+    override fun apply(move: Move) = FirstShip(
+            east + move.east + move.forward * orientation.east,
+            north + move.north + move.forward * orientation.north,
+            orientation.rotate(move.rotation)
+    )
 }
