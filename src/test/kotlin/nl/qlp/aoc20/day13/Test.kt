@@ -5,12 +5,12 @@ import org.junit.jupiter.api.Test
 
 class Test {
     @Test
-    fun `636 is correct answer for First`() {
-        assertThat(First().run()).isEqualTo(636)
+    fun `2095 is correct answer for First`() {
+        assertThat(First().run()).isEqualTo(2095)
     }
 
     @Test
-    fun `26841 is correct answer for Second`() {
-        assertThat(Second().run()).isEqualTo(26841)
+    fun `598411311431841 is correct answer for Second`() {
+        assertThat(Second().run()).isEqualTo(598411311431841)
     }
 }
