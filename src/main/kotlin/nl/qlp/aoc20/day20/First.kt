@@ -23,9 +23,9 @@ class First {
         }
 
         return tileToNeighbours
-                .filterValues { it.size == 2 }
-                .map { it.key.id }
-                .reduce { acc, l -> acc * l }
+            .filterValues { it.size == 2 }
+            .map { it.key.id }
+            .reduce { acc, l -> acc * l }
     }
 
     data class Tile(val id: Long, val rows: List<String>) {
