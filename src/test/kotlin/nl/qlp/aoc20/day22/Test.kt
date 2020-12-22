@@ -10,7 +10,7 @@ class Test {
     }
 
     @Test
-    fun `0 is correct answer for Second`() {
-        assertThat(Second().run()).isEqualTo(0)
+    fun `31587 is correct answer for Second`() {
+        assertThat(Second().run()).isEqualTo(31587)
     }
 }
