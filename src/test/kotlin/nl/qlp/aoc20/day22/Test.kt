@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test
 
 class Test {
     @Test
-    fun `2635 is correct answer for First`() {
-        assertThat(First().run()).isEqualTo(2635)
+    fun `30138 is correct answer for First`() {
+        assertThat(First().run()).isEqualTo(30138)
     }
 
     @Test

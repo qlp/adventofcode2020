@@ -7,39 +7,27 @@ fun main(args: Array<String>) {
 }
 
 class First {
-    fun run(): Long {
-        var game = readFromInput()
-                .split("\n\n")
-                .map { it.split("\n") }
-                .map { it.subList(1, it.size) }
-                .map { strings -> strings.map { it.toLong() } }
-                .map { Deck(it) }
-                .let { Game(it[0], it[1]) }
-
-        while (game.winner() == null) {
-            game = game.tick()
-
-            println(game)
-        }
-
-        println(game.winner())
-        println(game.winner()!!.score())
-
-        return 0
-    }
-
+    fun run() = readFromInput()
+            .split("\n\n")
+            .map { it.split("\n") }
+            .map { it.subList(1, it.size) }
+            .map { strings -> strings.map { it.toLong() } }
+            .map { Deck(it) }
+            .let { Game(it[0], it[1]) }
+            .winner()
+            .score()
 
     data class Game(val player1: Deck, val player2: Deck) {
         fun tick() =
-            if (players().any { it.lost() }) {
-                this
-            } else {
-                Game(player1.nextTurn(player2), player2.nextTurn(player1))
-            }
+                if (players().any { it.lost() }) {
+                    this
+                } else {
+                    Game(player1.nextTurn(player2), player2.nextTurn(player1))
+                }
 
         private fun players() = listOf(player1, player2)
 
-        fun winner(): Deck? = players().filterNot { it.lost() }.let { if (it.size == 1) it[0] else null }
+        fun winner(): Deck = players().filterNot { it.lost() }.let { if (it.size == 1) it[0] else tick().winner() }
     }
 
     data class Deck(val cards: List<Long>) {
