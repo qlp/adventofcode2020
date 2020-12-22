@@ -17,26 +17,36 @@ class Second {
             .winner()
             .score()
 
-    data class Game(val player1: Deck, val player2: Deck, val history: Set<Set<Deck>> = emptySet()) {
-        fun tick() =
-                when {
-                    history.contains(setOf(player1, player2)) -> next(Deck(listOf(player1.cards, player2.cards).flatten()), Deck(emptyList()))
-                    player1.canRecurse() && player2.canRecurse() -> Game(player1.recurse(), player2.recurse()).play().let {
-                        if (it.player1.lost()) {
-                            next(player1.losingDeck(), player2.winningDeck(player1))
-                        } else {
-                            next(player1.winningDeck(player2), player2.losingDeck())
-                        }
+    data class Game(var player1: Deck, var player2: Deck, val history: MutableSet<Set<Deck>> = mutableSetOf()) {
+        private fun tick() {
+            when {
+                history.contains(setOf(player1, player2)) -> next(Deck(listOf(player1.cards, player2.cards).flatten()), Deck(emptyList()))
+                player1.canRecurse() && player2.canRecurse() -> Game(player1.recurse(), player2.recurse()).play().let {
+                    if (it.player1.lost()) {
+                        next(player1.losingDeck(), player2.winningDeck(player1))
+                    } else {
+                        next(player1.winningDeck(player2), player2.losingDeck())
                     }
-                    else -> next(player1.nextTurn(player2), player2.nextTurn(player1))
                 }
+                else -> next(player1.nextTurn(player2), player2.nextTurn(player1))
+            }
+        }
 
-        private fun next(nextPlayer1: Deck, nextPlayer2: Deck) = Game(nextPlayer1, nextPlayer2, history.toMutableSet().apply { add(setOf(player1, player2)) }.toSet())
+        private fun next(nextPlayer1: Deck, nextPlayer2: Deck) {
+            history.add(setOf(player1, player2))
+
+            player1 = nextPlayer1
+            player2 = nextPlayer2
+        }
 
         private fun players() = listOf(player1, player2)
 
         private fun play(): Game {
-            return if (players().any { it.lost() }) this else tick().play()
+            while (!players().any { it.lost() }) {
+                tick()
+            }
+
+            return this
         }
 
         fun winner(): Deck = play().players().filterNot { it.lost() }.single()
